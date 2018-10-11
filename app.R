@@ -1,11 +1,8 @@
-library(readr)
-library(dplyr)
-library(reshape2)
-library(ggplot2)
-library(pander)
-library(knitr)
-library(h2o)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, mice, e1071, Metrics, skimr, pracma, shiny, h2o)
+
 h2o.init()
+#runApp("marketingApp", display.mode = "showcase")
 
 jobList <- c('admin',
              'blue-collar',

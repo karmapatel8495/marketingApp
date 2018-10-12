@@ -70,9 +70,9 @@ poutList <- c('Failure',
               'Non-existent',
               'Success')
 
-gbm <- readRDS(gzcon(url("https://www.dropbox.com/s/yuzcejfzfi9xiiy/gbm.rds?dl=1")))
-rf <- readRDS(gzcon(url("https://www.dropbox.com/s/zleo3q5ofiva4gy/rf.rds?dl=1")))
-nn <- readRDS(gzcon(url("https://www.dropbox.com/s/q16mawn0irt70on/nn.rds?dl=1")))
+gbm <- h2o.loadModel("GBM_model_R_1539302923604_524")
+rf <- h2o.loadModel("DRF_model_R_1539302923604_463")
+nn <- h2o.loadModel("DeepLearning_model_R_1539302923604_952")
 
 #gbm <- readRDS("gbm.rds")
 #rf <- readRDS("rf.rds")

@@ -70,6 +70,13 @@ poutList <- c('Failure',
               'Non-existent',
               'Success')
 
+download.file("https://www.dropbox.com/s/pegs7cqt0prez7v/GBM_model_R_1539302923604_524?dl=1",
+              "GBM_model_R_1539302923604_524")
+download.file("https://www.dropbox.com/s/eqb4t5yqihe9s5u/DRF_model_R_1539302923604_463?dl=1",
+              "DRF_model_R_1539302923604_463")
+download.file("https://www.dropbox.com/s/sxlbk9i0xry4dr9/DeepLearning_model_R_1539302923604_952?dl=1",
+              "DeepLearning_model_R_1539302923604_952")
+
 gbm <- h2o.loadModel("GBM_model_R_1539302923604_524")
 rf <- h2o.loadModel("DRF_model_R_1539302923604_463")
 nn <- h2o.loadModel("DeepLearning_model_R_1539302923604_952")

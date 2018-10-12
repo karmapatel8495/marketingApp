@@ -17,7 +17,7 @@ library(shinyjs)
 library(shinydashboard)
 library(shinythemes)
 
-h2o.init(port = 58000)
+h2o.init()
 
 jobList <- c(
   'Admin',
@@ -113,7 +113,7 @@ nnerr <- h2o.loadModel("DeepLearning_model_R_1539304335929_456")
 
 ui <-
   fluidPage(theme = shinytheme("cyborg"),
-            titlePanel(h2("Prediction of marketing efficiency")),
+            titlePanel(h2("Prediction of Marketing Efficiency")),
             sidebarLayout(
               sidebarPanel(
                 helpText(h3("Enter the user data below:")),
@@ -219,15 +219,21 @@ ui <-
                     hr(),
                     plotOutput("gbmpie")
                   ),
-                  tabPanel("GBM Summary",
-                           plotOutput("gbmerr"),
-                           verbatimTextOutput("gbm")),
-                  tabPanel("Random Forest Summary",
-                           plotOutput("rferr"),
-                           verbatimTextOutput("rf")),
-                  tabPanel("Neural Network summary",
-                           plotOutput("nnerr"),
-                           verbatimTextOutput("nn"))
+                  tabPanel(
+                    "GBM Summary",
+                    plotOutput("gbmerr"),
+                    verbatimTextOutput("gbm")
+                  ),
+                  tabPanel(
+                    "Random Forest Summary",
+                    plotOutput("rferr"),
+                    verbatimTextOutput("rf")
+                  ),
+                  tabPanel(
+                    "Neural Network summary",
+                    plotOutput("nnerr"),
+                    verbatimTextOutput("nn")
+                  )
                 )
               )
             ))
@@ -416,7 +422,7 @@ server <- function(input, output, session) {
       )
     
     colnames(input_data) <- cols
-    input_data[1,] <- current_obs
+    input_data[1, ] <- current_obs
     
     h2o.no_progress()
     
@@ -429,9 +435,9 @@ server <- function(input, output, session) {
       output_gbm <- as.data.frame(prediction_gbm)
       output_value_gbm <- output_gbm$predict[1]
       output_no_accuracy_gbm <-
-        round(as.numeric(output_gbm$no[1]) * 100, 4)
+        round(as.numeric(output_gbm$no[1]) * 100, 2)
       output_yes_accuracy_gbm <-
-        round(as.numeric(output_gbm$yes[1]) * 100, 4)
+        round(as.numeric(output_gbm$yes[1]) * 100, 2)
       no_list <- cbind(no_list, output_no_accuracy_gbm)
       yes_list <- cbind(yes_list, output_yes_accuracy_gbm)
       output$predgbm <-
@@ -453,9 +459,9 @@ server <- function(input, output, session) {
       output_rf <- as.data.frame(prediction_rf)
       output_value_rf <- output_rf$predict[1]
       output_no_accuracy_rf <-
-        round(as.numeric(output_rf$no[1]) * 100, 4)
+        round(as.numeric(output_rf$no[1]) * 100, 2)
       output_yes_accuracy_rf <-
-        round(as.numeric(output_rf$yes[1]) * 100, 4)
+        round(as.numeric(output_rf$yes[1]) * 100, 2)
       no_list <- cbind(no_list, output_no_accuracy_rf)
       yes_list <- cbind(yes_list, output_yes_accuracy_rf)
       output$predrf <-
@@ -477,9 +483,9 @@ server <- function(input, output, session) {
       output_nn <- as.data.frame(prediction_nn)
       output_value_nn <- output_nn$predict[1]
       output_no_accuracy_nn <-
-        round(as.numeric(output_nn$no[1]) * 100, 4)
+        round(as.numeric(output_nn$no[1]) * 100, 2)
       output_yes_accuracy_nn <-
-        round(as.numeric(output_nn$yes[1]) * 100, 4)
+        round(as.numeric(output_nn$yes[1]) * 100, 2)
       no_list <- cbind(no_list, output_no_accuracy_nn)
       yes_list <- cbind(yes_list, output_yes_accuracy_nn)
       output$prednn <-
@@ -495,24 +501,27 @@ server <- function(input, output, session) {
       output$predrr <- renderPrint(cat(""))
     }
     
-    pie_no <- mean(no_list)
-    pie_yes <- mean(yes_list)
+    pie_no <- round(mean(no_list), 2)
+    pie_yes <- round(mean(yes_list), 2)
     
     if (input$showgbm | input$showrf | input$shownn)
     {
       output$gbmpie <- renderPlot({
         pie(
           c(pie_no, pie_yes),
-          labels = c(paste("No (", pie_no, "%)"), paste("Yes (", pie_yes, "%)")),
-          main = "Probability of lead conversion",
-          col = c("#999999", "#108010"),
+          labels = c(
+            paste("No (", pie_no, "%)"),
+            paste("Yes (", pie_yes, "%)")
+          ),
+          main = "Probability of Lead Conversion",
+          col = c("bisque", "darkgoldenrod2"),
           cex = 2,
           cex.main = 3,
           border = TRUE
         )
       })
     }
-    else if(!input$showgbm & !input$showrf & !input$shownn){
+    else if (!input$showgbm & !input$showrf & !input$shownn) {
       output$gbmpie <- renderPrint(cat(""))
     }
   })
@@ -560,13 +569,80 @@ server <- function(input, output, session) {
   })
   output$pred <- renderPrint(predictMarketing())
   output$gbm <- renderPrint({
-    summary(gbm)
+    cat(
+      "Model Details:",
+      "\n",
+      "\n",
+      "Model Type : Gradient Boosting Algorithm",
+      "\n",
+      "Number of trees :",
+      gbm@parameters$ntrees,
+      "Distribution type : Bernoulli",
+      "\n",
+      "RMSE : ",
+      h2o.rmse(gbm),
+      "\n",
+      "Area Under Curve : ",
+      h2o.auc(gbm),
+      "\n",
+      "R-square : ",
+      h2o.r2(gbm),
+      "\n",
+      "Log Loss : ",
+      h2o.logloss(gbm),
+      "\n",
+      "Gini co-efficient : ",
+      h2o.giniCoef(gbm)
+    )
   })
   output$rf <- renderPrint({
-    summary(rf)
+    cat(
+      "Model Details:",
+      "\n",
+      "\n",
+      "Model Type : Random Forest",
+      "\n",
+      "Distribution type : Multinomial",
+      "\n",
+      "RMSE : ",
+      "\n",
+      h2o.rmse(rf),
+      "\n",
+      "Area Under Curve : ",
+      h2o.auc(rf),
+      "\n",
+      "R-square : ",
+      h2o.r2(rf),
+      "\n",
+      "Log Loss : ",
+      h2o.logloss(rf),
+      "\n",
+      "Gini co-efficient : ",
+      h2o.giniCoef(rf)
+    )
   })
   output$nn <- renderPrint({
-    summary(nn)
+    cat(
+      "Model Details:",
+      "\n",
+      "\n",
+      "Model Type : Neural Network",
+      "\n",
+      "RMSE : ",
+      h2o.rmse(nn),
+      "\n",
+      "Area Under Curve : ",
+      h2o.auc(nn),
+      "\n",
+      "R-square : ",
+      h2o.r2(nn),
+      "\n",
+      "Log Loss : ",
+      h2o.logloss(nn),
+      "\n",
+      "Gini co-efficient : ",
+      h2o.giniCoef(nn)
+    )
   })
   output$gbmerr <- renderPlot({
     plot(gbmerr)

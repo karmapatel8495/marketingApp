@@ -1,8 +1,20 @@
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, mice, e1071, Metrics, skimr, pracma, shiny, h2o)
+#install.packages("h2o", type="source", repos=(c("http://h2o-release.s3.amazonaws.com/h2o/latest_stable_R")))
 
-h2o.init()
-#runApp("marketingApp", display.mode = "showcase")
+#if (!require("pacman")) install.packages("pacman")
+#pacman::p_load(tidyverse, mice, e1071, Metrics, skimr, pracma, shiny, h2o)
+
+#runApp("marketingApp", display.mode = "normal")
+
+library(tidyverse)
+library(mice)
+library(e1071)
+library(Metrics)
+library(skimr)
+library(pracma)
+library(shiny)
+library(h2o)
+
+h2o.init(port = 58000)
 
 jobList <- c('admin',
              'blue-collar',
@@ -61,6 +73,10 @@ poutList <- c('Failure',
 gbm <- readRDS(gzcon(url("https://www.dropbox.com/s/yuzcejfzfi9xiiy/gbm.rds?dl=1")))
 rf <- readRDS(gzcon(url("https://www.dropbox.com/s/zleo3q5ofiva4gy/rf.rds?dl=1")))
 nn <- readRDS(gzcon(url("https://www.dropbox.com/s/q16mawn0irt70on/nn.rds?dl=1")))
+
+#gbm <- readRDS("gbm.rds")
+#rf <- readRDS("rf.rds")
+#nn <- readRDS("nn.rds")
 
 ui <- fluidPage(
   tags$head(
@@ -168,9 +184,9 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session){
-
+  
   predictMarketing <- reactive({
-
+    
     input_data <- data.frame(matrix(ncol = 54, nrow = 0))
     
     age_1 <- as.numeric(input$age < 30)
@@ -246,12 +262,12 @@ server <- function(input, output, session){
     
     current_obs <- c(as.numeric(input$age), as.numeric(input$campaign), as.numeric(input$previous), 
                      log(as.numeric(input$age)), age_1, age_2, age_3,
-              job_1, job_2, job_3, job_4, job_5, job_6, job_7,  job_8, 
-              job_9, job_10, job_11, marital_1, marital_2, marital_3, 
-              edu_1, edu_2, edu_3, edu_4, edu_5, edu_6, edu_7, default_1, 
-              default_2, housing_1, housing_2, loan_1, loan_2, con_1, con_2,
-              mar, apr, may, jun, jul,  aug, sep, oct, nov, dec, mon, 
-              tue, wed, thu, fri, poutcome1, poutcome2, poutcome3)
+                     job_1, job_2, job_3, job_4, job_5, job_6, job_7,  job_8, 
+                     job_9, job_10, job_11, marital_1, marital_2, marital_3, 
+                     edu_1, edu_2, edu_3, edu_4, edu_5, edu_6, edu_7, default_1, 
+                     default_2, housing_1, housing_2, loan_1, loan_2, con_1, con_2,
+                     mar, apr, may, jun, jul,  aug, sep, oct, nov, dec, mon, 
+                     tue, wed, thu, fri, poutcome1, poutcome2, poutcome3)
     
     colnames(input_data) <- cols
     input_data[1,] <- current_obs
@@ -267,11 +283,11 @@ server <- function(input, output, session){
       output_yes_accuracy_gbm <- round(as.numeric(output_gbm$yes[1]) * 100, 4)
       if (output_value_gbm == "no") {
         output$predgbm <- renderPrint(cat(paste("Our GBM model predicts with ", output_no_accuracy_gbm,
-                     "% accuracy that the client WON'T subscribe to a term deposit.")))
+                                                "% accuracy that the client WON'T subscribe to a term deposit.")))
       }
       else {
         output$predgbm <- renderPrint(cat(paste("Our GBM model predicts with ", output_yes_accuracy_gbm,
-                     "% accuracy that the client WOULD subscribe to a term deposit.")))
+                                                "% accuracy that the client WOULD subscribe to a term deposit.")))
       }
     }
     
@@ -284,11 +300,11 @@ server <- function(input, output, session){
       output_yes_accuracy_rf <- round(as.numeric(output_rf$yes[1]) * 100, 4)
       if (output_value_rf == "no") {
         output$predrf <- renderPrint(cat(paste("Our Random  Forest model predicts with ", output_no_accuracy_rf,
-                     "% accuracy that the client WON'T subscribe to a term deposit.")))
+                                               "% accuracy that the client WON'T subscribe to a term deposit.")))
       }
       else {
         output$predrf <- renderPrint(cat(paste("Our Random Forest model predicts with ", output_yes_accuracy_rf,
-                     "% accuracy that the client WOULD subscribe to a term deposit.")))
+                                               "% accuracy that the client WOULD subscribe to a term deposit.")))
       }
     }
     
@@ -301,11 +317,11 @@ server <- function(input, output, session){
       output_yes_accuracy_nn <- round(as.numeric(output_nn$yes[1]) * 100, 4)
       if (output_value_nn == "no") {
         output$prednn <- renderPrint(cat(paste("Our Neural Network model predicts with ", output_no_accuracy_nn,
-                     "% accuracy that the client WON'T subscribe to a term deposit.")))
+                                               "% accuracy that the client WON'T subscribe to a term deposit.")))
       }
       else {
         output$prednn <- renderPrint(cat(paste("Our Neural  Network model predicts with ", output_yes_accuracy_nn,
-                     "% accuracy that the client WOULD subscribe to a term deposit.")))
+                                               "% accuracy that the client WOULD subscribe to a term deposit.")))
       }
     }
   })
@@ -350,8 +366,8 @@ server <- function(input, output, session){
     paste("Outcome of the previous marketing campaign? = ",input$pout)
   })
   output$pred <- renderPrint(
-      predictMarketing()
-    )
+    predictMarketing()
+  )
   output$gbm <- renderPrint({ 
     summary(gbm)
   })

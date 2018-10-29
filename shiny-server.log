@@ -1,0 +1,20 @@
+[32m[2018-10-28 16:39:08.469] [INFO] shiny-server - [39mShiny Server v1.4.4.807 (Node.js v0.10.46)
+[32m[2018-10-28 16:39:08.470] [INFO] shiny-server - [39mUsing pidfile /var/run/shiny-server.pid
+[32m[2018-10-28 16:39:08.472] [INFO] shiny-server - [39mUsing config file "/etc/shiny-server/shiny-server.conf"
+[33m[2018-10-28 16:39:08.502] [WARN] shiny-server - [39mRunning as root unnecessarily is a security risk! You could be running more securely as non-root.
+[32m[2018-10-28 16:39:08.504] [INFO] shiny-server - [39mStarting listener on 0.0.0.0:3838
+[32m[2018-10-28 20:48:41.335] [INFO] shiny-server - [39mCreated bookmark state directory: /var/lib/shiny-server/bookmarks
+[32m[2018-10-28 20:48:41.343] [INFO] shiny-server - [39mCreated user bookmark state directory: /var/lib/shiny-server/bookmarks/shiny
+[32m[2018-10-28 20:48:42.106] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.
+[32m[2018-10-28 20:50:38.654] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.
+[32m[2018-10-28 20:53:16.104] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.
+[32m[2018-10-28 20:58:13.597] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.
+[32m[2018-10-28 20:58:15.810] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.
+[32m[2018-10-28 20:58:32.053] [INFO] shiny-server - [39mStopping listener on 0.0.0.0:3838
+[32m[2018-10-28 20:58:32.054] [INFO] shiny-server - [39mShutting down worker processes (with notification)
+0[32m[2018-10-28 20:58:37.806] [INFO] shiny-server - [39mShiny Server v1.4.4.807 (Node.js v0.10.46)
+[32m[2018-10-28 20:58:37.807] [INFO] shiny-server - [39mUsing pidfile /var/run/shiny-server.pid
+[32m[2018-10-28 20:58:37.814] [INFO] shiny-server - [39mUsing config file "/etc/shiny-server/shiny-server.conf"
+[33m[2018-10-28 20:58:37.837] [WARN] shiny-server - [39mRunning as root unnecessarily is a security risk! You could be running more securely as non-root.
+[32m[2018-10-28 20:58:37.839] [INFO] shiny-server - [39mStarting listener on 0.0.0.0:3838
+[32m[2018-10-28 20:58:43.494] [INFO] shiny-server - [39mError getting worker: Error: The application exited during initialization.

@@ -6,9 +6,8 @@ To run the Shiny App:
 Open RStudio and run the below commands:
 
 ```
-function test() {
-  console.log("notice the blank line before this function?");
-}
+library(shiny)
+runGitHub("marketing_shiny_app", "karmapatel8495")
 ```
 
 The increasingly vast number of marketing campaigns over time has reduced its effect on the general public. Furthermore, economical pressures and competition has led marketing managers to invest on directed campaigns with a strict and rigorous selection of contacts. Such direct campaigns can be enhanced through the use of Business Intelligence (BI) and Data Mining (DM) techniques.

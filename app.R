@@ -79,27 +79,27 @@ poutList <- c('Failure',
               'Success')
 
 download.file(
-  "https://www.dropbox.com/s/pegs7cqt0prez7v/GBM_model_R_1539302923604_524?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/GBM_model_R_1539302923604_524?raw=true",
   "GBM_model_R_1539302923604_524"
 )
 download.file(
-  "https://www.dropbox.com/s/eqb4t5yqihe9s5u/DRF_model_R_1539302923604_463?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/DRF_model_R_1539302923604_463?raw=true",
   "DRF_model_R_1539302923604_463"
 )
 download.file(
-  "https://www.dropbox.com/s/sxlbk9i0xry4dr9/DeepLearning_model_R_1539302923604_952?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/DeepLearning_model_R_1539302923604_952?raw=true",
   "DeepLearning_model_R_1539302923604_952"
 )
 download.file(
-  "https://www.dropbox.com/s/oej8101jbcnumdb/GBM_model_R_1539304335929_50?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/GBM_model_R_1539304335929_50?raw=true",
   "GBM_model_R_1539304335929_50"
 )
 download.file(
-  "https://www.dropbox.com/s/6cev281ejticiei/DRF_model_R_1539304335929_1?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/DRF_model_R_1539304335929_1?raw=true",
   "DRF_model_R_1539304335929_1"
 )
 download.file(
-  "https://www.dropbox.com/s/22lqmilhnyfpsds/DeepLearning_model_R_1539304335929_456?dl=1",
+  "https://github.com/karmapatel8495/marketing_shiny_app/blob/master/DeepLearning_model_R_1539304335929_456?raw=true",
   "DeepLearning_model_R_1539304335929_456"
 )
 
